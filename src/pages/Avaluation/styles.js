@@ -46,30 +46,30 @@ export const Content = styled.main`
     background-color: #FFFFFF;
 `
 
-export const Type = styled.div`
+export const Stars = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    
-    div {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        width: 220%;
-        
-        input {
-            margin-right: 8px;
-            width: 24px;
-            height: 24px;
-        }
+    width: 100%;
+`
 
-        span {
-            margin-right: 48px;
-            color: #1D1D23;
-            font-size: 16px;
-            font-weight: 600;
-        }
+export const ButtonStar = styled.div`
+    margin: 16px;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+
+    svg {
+        font-size: 48px;
+        color: ${props => props.select ? '#ABDBB2' : '#5CA5E9'};
+    }
+
+    p {
+        margin-top: -40px;
+        margin-left: ${props => props.option10 ? '14' : '19'}px ;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
     }
 `

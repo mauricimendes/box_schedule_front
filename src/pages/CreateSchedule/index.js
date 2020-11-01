@@ -20,21 +20,20 @@ import Input from '../../components/Input'
 import Textarea from '../../components/Textarea'
 import Button from '../../components/Button'
 
-const Info = () => {
-    return (
-        <Infos>
-            <h1>Maurici</h1>
-            <span>27/10/2020 12:45:00</span>
-        </Infos>
-    )
-}
 
 const Options = () => {
+
+    const history = useHistory()
+
+    const handleNavigateToAvaluations = useCallback(() => {
+        history.push('/schedules-list')
+    }, [history])
+
     return (
         <>
         <Option>
             {/* <button>APONTAMENTO</button> */}
-            <button><p>AVALIAÇÕES</p></button>
+            <button onClick={handleNavigateToAvaluations}><p>AVALIAÇÕES</p></button>
         </Option>
         <ButtonLogout />
         </>
@@ -83,6 +82,12 @@ const CreateSchedule = () => {
 
             await api.post('schedule', dataForm)
 
+            addToast({
+                type: 'success',
+                title: 'ATA / REGRA inserido',
+                description: 'Sua ATA / REGRA foi inserida com sucesso.'
+            })
+
             history.push('/schedules-list')
         } catch ( err ) {
             if (err instanceof Yup.ValidationError) {
@@ -96,15 +101,14 @@ const CreateSchedule = () => {
             addToast({
                 type: 'error',
                 title: 'Erro na inserção',
-                description: 'Ocorreu um erro ao inserir uma ata, tente novamente.'
+                description: 'Ocorreu um erro ao inserir ATA / REGRA, tente novamente.'
             })
         }
     }, [signIn, addToast, history, type])
 
     return (
         <>
-        <Header 
-            info={<Info/>}
+        <Header
             title='ATA / REGRA'
             options={<Options />}
         />

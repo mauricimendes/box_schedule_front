@@ -13,12 +13,25 @@ export const Container = styled.div`
     padding: 48px;
 `
 
+
 export const Info = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    h1 {
+        font-size: 32px;
+        font-weight: 500;
+        color: #f3f3f3;
+    }
+
+    span {
+        font-size: 16px;
+        font-weight: 400;
+        color: #f3f3f3;
+    }
 `
 
 export const Title = styled.div`

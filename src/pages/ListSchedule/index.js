@@ -3,6 +3,7 @@ import React, { useEffect, useCallback, useState } from 'react'
 import Modal from 'react-modal'
 
 import { RiStarFill } from 'react-icons/ri'
+import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 import api from '../../services/api'
 
@@ -16,18 +17,16 @@ import {
     Infos, 
     AvaluationContainer,
     AvaluationNumber,
-    AvaluationDescription,
-    AvaluationComments 
+    AvaluationTitle,
+    AvaluationComments ,
+    CommentContainer,
+    Close,
+    ButtonAvaluation,
+    ButtonClose,
+    User,
+    Comment
 } from './styles'
-
-const Info = () => {
-    return (
-        <Infos>
-            <h1>Maurici</h1>
-            <span>27/10/2020 12:45:00</span>
-        </Infos>
-    )
-}
+import { useHistory } from 'react-router-dom'
 
 const Options = () => {
     return (
@@ -39,10 +38,13 @@ const Options = () => {
 
 const ListSchedule = () => {
 
+    const history = useHistory()
+
     const { addToast } = useToast()
 
     const [schedules, setSchedules] = useState([])
     const [comments, setComments] = useState([])
+    const [scheduleAvaluation, setScheduleAvaluation] = useState('')
     const [modal, setModal] = useState(false)
 
     useEffect(() => {
@@ -65,7 +67,8 @@ const ListSchedule = () => {
             total = total + avaluations[i].note
         }
         if ( total >= 1 ) {
-            return total / avaluations.length
+            var note = total / avaluations.length
+            return note.toFixed(1)
         }
         else {
             return 0
@@ -73,17 +76,45 @@ const ListSchedule = () => {
     }, [])
 
     const handleSeeComments = useCallback((schedule) => {
-        setComments(schedule.schedule.avaluation)
+        setComments(schedule.avaluation)
+        setScheduleAvaluation(schedule.schedule.id)
         setModal(true)
     }, [])
+
+    const handleNavigationToAvaluation = useCallback(() => {
+        history.push('/avaluation', { scheduleAvaluation })
+    }, [history, scheduleAvaluation])
     
     return (
         <>
         <Modal 
             isOpen={modal}
-        />
+        >   
+            <Close>
+                <ButtonAvaluation onClick={handleNavigationToAvaluation}>
+                    AVALIAR
+                </ButtonAvaluation>
+                <ButtonClose onClick={() => setModal(false)}>
+                    <IoIosCloseCircleOutline />
+                </ButtonClose>
+            </Close>
+            {comments.map(comment => (
+                <CommentContainer key={comment.id} >
+                    <User>
+                        <h1>
+                            {comment.user.name}
+                        </h1>
+                        <span>
+                            {comment.note} <RiStarFill />
+                        </span>
+                    </User>
+                    <Comment>
+                        {comment.observation}
+                    </Comment>
+                </CommentContainer>
+            ))}
+        </Modal>
         <Header 
-            info={<Info/>}
             title='AVALIAÇÕES'
             options={<Options />}
         />
@@ -98,11 +129,11 @@ const ListSchedule = () => {
                             {note(schedule.avaluation ? schedule.avaluation : [])} <RiStarFill />
                         </span>
                     </AvaluationNumber>
-                    <AvaluationDescription>
+                    <AvaluationTitle>
                         <p>
-                            {schedule.schedule.description}
+                            {schedule.schedule.title}
                         </p>
-                    </AvaluationDescription>
+                    </AvaluationTitle>
                     <AvaluationComments>
                         <button onClick={() => handleSeeComments(schedule)}>
                             comentários

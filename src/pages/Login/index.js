@@ -49,6 +49,12 @@ const Login = () => {
                 password: data.password
             })
 
+            addToast({
+                type: 'success',
+                title: 'Login realizado com sucesso',
+                description: 'Bem-vindo(a), você já pode utilizar todas as fuções do Box Schedule.'
+            })
+
             history.push('/schedules')
         } catch ( err ) {
             if (err instanceof Yup.ValidationError) {
