@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import * as Yup from 'yup'
 import api from '../../services/api'
@@ -11,13 +11,12 @@ import { useToast } from '../../hooks/toast'
 
 import Header from '../../components/Header'
 
-import { MdDescription, MdTitle } from 'react-icons/md'
+import { MdDescription } from 'react-icons/md'
 
 import { Container, Option, Content, Type, Form, Checkbox} from './styles'
 
 import ButtonLogout from '../../components/ButtonLogout'
 import Textarea from '../../components/Textarea'
-import Input from '../../components/Input'
 import Button from '../../components/Button'
 
 const Options = () => {
@@ -39,16 +38,18 @@ const Options = () => {
 }
 
 
-const CreateSchedule = () => {
+const EditSchedule = () => {
 
     const formRef = useRef(null)
     const history = useHistory()
     const { signIn, user } = useAuth()
     const { addToast } = useToast()
+    const location = useLocation()
 
-    const [type, setType] = useState('')
-    const [hidden, setHidden] = useState('no')
-    const [finaly, setFinaly] = useState('no')
+    const [initialData, setInitialData] = useState(location.state.schedule.schedule)
+    const [type, setType] = useState('schedule')
+    const [hidden, setHidden] = useState(initialData.hidden)
+    const [finaly, setFinaly] = useState(initialData.state === 'concluded' ? 'yes' : 'no')
 
     const handleSubmit = useCallback( async ( data ) => {
         if ( !type ) {
@@ -65,29 +66,29 @@ const CreateSchedule = () => {
             }
 
             const schema = Yup.object().shape({
-                title: Yup.string().required('Título é obrigatório'),
-                schedule: Yup.string().required('Pauta é obrigatório'),
+                schedule: Yup.string().required('Titulo obrigatório'),
+                description: Yup.string().required('Descrição obrigatória')
             })
 
             await schema.validate(data, { abortEarly: false })
 
-            const { schedule, description, title } = data
+            const { schedule, description } = data
 
             const dataForm = {
-                title,
+                id: initialData.id,
                 schedule,
                 description,
-                finaly: type === 'rule' ? 'no' : 'yes',
+                finaly,
                 type,
                 hidden
             }
 
-            await api.post('schedule', dataForm)
+            await api.patch('schedule', dataForm)
 
             addToast({
                 type: 'success',
-                title: 'ATA / REGRA inserido',
-                description: 'Sua ATA / REGRA foi inserida com sucesso.'
+                title: 'ATA / REGRA alterada',
+                description: 'Sua ATA / REGRA foi alterada com sucesso.'
             })
 
             history.push('/schedules-list')
@@ -106,7 +107,7 @@ const CreateSchedule = () => {
                 description: 'Ocorreu um erro ao inserir ATA / REGRA, tente novamente.'
             })
         }
-    }, [signIn, addToast, history, type, hidden, finaly])
+    }, [signIn, addToast, history, type, hidden, initialData, finaly])
 
     return (
         <>
@@ -116,13 +117,7 @@ const CreateSchedule = () => {
         />
         <Container>
             <Content>
-                <Form ref={formRef} style={{width: '100%'}} onSubmit={handleSubmit}>
-
-                    <Input 
-                        name='title'
-                        icon={MdTitle}
-                        placeholder='Título'
-                    />
+                <Form initialData={initialData} ref={formRef} style={{width: '100%'}} onSubmit={handleSubmit}>
                 
                     <Textarea 
                         name='schedule' 
@@ -144,15 +139,8 @@ const CreateSchedule = () => {
                         <div>
                             <input 
                                 type='radio' 
-                                name='type' 
-                                value='rule' 
-                                id='typeREGRA'
-                                onChange={( value ) => setType(value.target.value)}
-                                />
-                            <span>REGRA</span>
-                            <input 
-                                type='radio' 
                                 name='type'
+                                checked
                                 value='schedule' 
                                 id='typeATA'     
                                 onChange={( value ) => setType(value.target.value)}
@@ -162,33 +150,31 @@ const CreateSchedule = () => {
                     </Type>
                     <Type>
 
-                            <Checkbox>
-                                {user.type === 'admin' &&
-                                    <>
-                                    <input 
-                                        type='checkbox'
-                                        name='hidden'
-                                        value={hidden}
-                                        onChange={( value ) => setHidden(value.target.checked ? 'yes' : 'no')}
-                                    /> 
-                                    <span>Ocultar</span>
-                                    </>
-                                }
-                                {type !== 'rule' ? 
-                                    <>
-                                    <input 
-                                        type='checkbox'
-                                        name='finaly'
-                                        value={finaly}
-                                        onChange={( value ) => setFinaly(value.target.checked ? 'yes' : 'no')}
-                                    /> 
-                                    <span>Finalizar</span>
-                                    </>
-                                : ''}
+                        <Checkbox>
+                            {user.type === 'admin' &&
+                                <>
+                                <input 
+                                    type='checkbox'
+                                    name='hidden'
+                                    checked={hidden === 'yes' ? true : false}
+                                    value={hidden}
+                                    onChange={( value ) => setHidden(value.target.checked ? 'yes' : 'no')}
+                                /> 
+                                <span>Ocultar</span>
+                                </>
+                            }
+                            <input 
+                                type='checkbox'
+                                name='finaly'
+                                checked={finaly === 'yes' ? true : false}
+                                value={finaly}
+                                onChange={( value ) => setFinaly(value.target.checked ? 'yes' : 'no')}
+                            /> 
+                            <span>Finalizar</span>
                             </Checkbox>
 
                         <Button type='submit' >
-                            CRIAR
+                            ALTERAR
                         </Button>
                     
                     </Type>
@@ -199,4 +185,4 @@ const CreateSchedule = () => {
     )
 }
 
-export default CreateSchedule
+export default EditSchedule

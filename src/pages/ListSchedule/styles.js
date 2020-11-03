@@ -19,90 +19,6 @@ const appearFromLeft = keyframes`
     }
 `
 
-export const AvaluationContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    animation: ${appearFromLeft} 1s;
-
-    width: ${92 / numItemsPerRow}%;
-    height: 148px;
-    margin: 16px;
-
-    background-color: #FFF;
-    padding: 8px;
-    border: 0;
-    border-radius: 5px;
-`
-
-export const AvaluationNumber = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    label {
-        color: #5CA5E9;
-        font-size: 16px;
-        font-weight: 700;
-    }
-
-    span {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-
-        color: #5CA5E9;
-        font-size: 16px;
-        font-weight: 700;
-
-        svg {
-            margin-top: -2px;
-            margin-left: 2px;
-        }
-    }
-`
-
-export const AvaluationTitle = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    p {
-        color: #1D1D23;
-        font-size: 16px;
-        font-weight: 600;
-    }
-`
-
-export const AvaluationComments = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    button {
-        border: 0;
-        background-color: transparent;
-
-        color: #5CA5E9;
-        font-size: 16px;
-        font-weight: 700;
-    }
-
-    span {
-        color: #5CA5E9;
-        font-size: 16px;
-        font-weight: 700;
-    }
-`
-
 export const CommentContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -110,7 +26,7 @@ export const CommentContainer = styled.div`
     align-items: flex-start;
     width: 100%;
     margin-bottom: 48px;
-    animation: ${appearFromLeft} 1s;
+    animation: ${appearFromLeft} 0.5s;
 `
 
 export const User = styled.div`
@@ -152,6 +68,23 @@ export const Close = styled.div`
     margin-bottom: 16px;
 `
 
+export const Option = styled.div`
+    button {
+        background-color: #ABDBB2;
+        border: 0;
+        border-radius: 5px;
+        padding: 8px;
+        min-width: 160px;
+
+        p {
+            font-size: 16px;
+            font-weight: 700;
+            color: #f3f3f3;
+            font-family: 'Nunito', sans-serif; 
+        }
+    }
+`
+
 export const ButtonClose = styled.button`
     display: flex;
     flex-direction: row;
@@ -178,4 +111,37 @@ export const ButtonAvaluation = styled.button`
     font-weight: 700;
 
     min-width: 120px;
+`
+
+export const TitleSchedule = styled.div`
+    span {
+        font-size: 24px;
+        margin-top: 24px;
+        font-weight: 700;
+        color: #1D1D23;
+    }
+    label {
+        font-size: 24px;
+        margin-top: 24px;
+        color: #1D1D23;
+    }
+    margin-bottom: 16px;
+`
+
+export const FilterControl = styled.div`
+    display: flex;
+    width: 100%;
+    padding: 16px 48px;
+    justify-content: flex-end;
+
+    button {
+        border: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: #5CA5E9;
+        font-size: 20px;
+    }
 `

@@ -8,6 +8,7 @@ import CreateAccount from '../pages/CreateAccount'
 import CreateSchedule from '../pages/CreateSchedule'
 import ListSchedule from '../pages/ListSchedule'
 import Avaluation from '../pages/Avaluation'
+import EditSchedule from '../pages/CreateSchedule/edit'
 
 const Routes = () => {
     return (
@@ -18,6 +19,7 @@ const Routes = () => {
             <Route path='/schedules' component={CreateSchedule} isPrivate />
             <Route path='/schedules-list' component={ListSchedule} isPrivate />
             <Route path='/avaluation' component={Avaluation} isPrivate />
+            <Route path='/schedule-edit' component={EditSchedule} isPrivate />
         </Switch>
     )
 }

@@ -4,13 +4,13 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 15vh;
+    height: 68px;
     background-color: #5CA5E9;
 
     justify-content: space-between;
     align-items: center;
 
-    padding: 48px;
+    padding: 16px 48px;
 `
 
 

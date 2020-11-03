@@ -8,6 +8,7 @@ export const Container = styled.div`
     border: 2px solid #5CA5E9;
     padding: 16px;
     width: 100%;
+    max-height: 40px;
     color: #5CA5E9;
     display: flex;
     align-items: center;

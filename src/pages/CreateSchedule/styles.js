@@ -17,7 +17,7 @@ const appearFromLeft = keyframes`
 `
 
 export const Form = styled(FormApp)`
-    animation: ${appearFromLeft} 1s;
+    animation: ${appearFromLeft} 0.5s;
 `
 
 export const Option = styled.div`
@@ -71,5 +71,17 @@ export const Type = styled.div`
             font-size: 16px;
             font-weight: 600;
         }
+    }
+`
+
+export const Checkbox = styled.div`
+    display: flex;
+    width: 100%;
+        
+    span {
+        color: #1D1D23;
+        font-size: 16px;
+        font-weight: 600;
+        margin-left: 8px;
     }
 `

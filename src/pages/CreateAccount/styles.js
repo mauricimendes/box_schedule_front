@@ -79,3 +79,16 @@ export const Background = styled.div`
     background: url(${signInBackgroundImg}) no-repeat center;
     background-size: cover;
 `
+
+export const Checkbox = styled.div`
+    display: flex;
+    width: 100%;
+    margin-left: 20px;
+    
+    span {
+        color: #1D1D23;
+        font-size: 16px;
+        font-weight: 600;
+        margin-left: 8px;
+    }
+`

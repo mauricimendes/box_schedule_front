@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, useState } from 'react'
 
 import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi'
 
@@ -17,7 +17,8 @@ import {
     Background, 
     Container, 
     Content,
-    AnimationContainer
+    AnimationContainer,
+    Checkbox
 } from './styles'
 
 import box_schedule from '../../assets/box_schedule.png'
@@ -30,6 +31,8 @@ const Login = () => {
     const formRef = useRef(null)
     const { addToast } = useToast()
     const history = useHistory()
+
+    const [type, setType] = useState('team')
 
     const handleSubmit = useCallback( async ( data ) => {
         try {
@@ -54,7 +57,8 @@ const Login = () => {
             const dataForm = {
                 email,
                 name,
-                password
+                password,
+                type
             }
 
             await api.post('/users', dataForm)
@@ -82,7 +86,7 @@ const Login = () => {
                 description: 'Ocorreu um erro ao fazer cadastro, tente novamente.'
             })
         }
-    }, [addToast, history])
+    }, [addToast, history, type])
     
     return (
         <Container>
@@ -112,6 +116,11 @@ const Login = () => {
                             type='password' 
                             placeholder='Confirme a senha' 
                         />
+
+                        <Checkbox>
+                            <input type='checkbox' value={type} onChange={(value) => setType(value.target.checked ? 'admin' : 'team')} name='type' />
+                            <span>Admin</span>
+                        </Checkbox>
                     
                         <Button type='submit'>Criar</Button>
                 

@@ -13,6 +13,7 @@ export const Container = styled.button`
     font-weight: 700;
     font-size: 22px;
     width: 100%;
+    max-height: 40px;
     font-weight: 500;
     margin-top: 16px;
     transition: background-color 0.2s;
