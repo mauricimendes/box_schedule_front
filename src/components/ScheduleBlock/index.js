@@ -64,7 +64,7 @@ const ScheduleBlock = ({
     }, [schedule])
 
     const date = useMemo(() => {
-        return format(parseISO(created_at), 'dd/mm/yyyy', { locale: ptBR })
+        return format(parseISO(created_at), 'dd/MM/yyyy', { locale: ptBR })
     }, [])
 
     return (
@@ -79,9 +79,11 @@ const ScheduleBlock = ({
                         PAUTA
                     </label>
                 }
-                <span>
-                    {note(avaluation)} <RiStarFill />
-                </span>
+                {type === 'rule' && 
+                    <span>
+                        {note(avaluation)} <RiStarFill />
+                    </span>
+                }
             </AvaluationNumber>
             <AvaluationTitle active={active} occult={hidden}>
                 <p>

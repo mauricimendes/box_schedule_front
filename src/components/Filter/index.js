@@ -7,31 +7,49 @@ import InputMask from 'react-input-mask'
 
 import { Container, Filters } from './styles'
 
+import { useToast } from '../../hooks/toast'
+
 const Filter = ({ open, onFiltered }) => {
 
-    const [initalDate, setInitalDate] = useState()
+    const { addToast } = useToast()
+
+    const [initialDate, setInitialDate] = useState()
     const [finalDate, setFianlDate] = useState()
     const [type, setType] = useState('')
     const [state, setState] = useState('')
     const [active, setActive] = useState('')
 
     const handleSearch = useCallback(() => {
+
+        if (( initialDate && !finalDate ) || ( !initialDate && finalDate )) {
+            addToast({
+                type: 'error',
+                title: 'Datas Obrigatórias',
+                description: 'Necessário um intervalo de datas.'
+            })
+        } 
+
+        const formatedInitialDate = initialDate ? initialDate.split('/') : '' 
+        const formatedFinalDate = finalDate ? finalDate.split('/') : '' 
+
+        const lastDay = Number(formatedFinalDate[0]) + 1
+
         const filters = {
-            initial_date: initalDate,
-            final_date: finalDate,
+            initial_date: initialDate ? new Date(`${formatedInitialDate[2]}/${formatedInitialDate[1]}/${formatedInitialDate[0]}`).toISOString() : false,
+            final_date: finalDate ? new Date(`${formatedFinalDate[2]}/${formatedFinalDate[1]}/${String(lastDay)}`).toISOString() : false,
             type,
             state,
             active
         }
         onFiltered(filters)
-    }, [initalDate, type, state, finalDate, active])
+    }, [initialDate, type, state, finalDate, active, addToast])
 
     return (
         <Container open={open}>
             <Filters>
                 <div>
                     <AiOutlineCalendar />
-                    <InputMask mask='99/99/9999' value={initalDate} onChange={(e) => setInitalDate(e.target.value)} placeholder='Data inicial' />
+                    <InputMask mask='99/99/9999' value={initialDate} onChange={(e) => setInitialDate(e.target.value)} placeholder='Data inicial' />
                 </div>
 
                 <div>

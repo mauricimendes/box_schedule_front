@@ -77,7 +77,7 @@ const CreateSchedule = () => {
                 title,
                 schedule,
                 description,
-                finaly: type === 'rule' ? 'no' : 'yes',
+                finaly: type === 'rule' ? 'no' : finaly,
                 type,
                 hidden
             }
