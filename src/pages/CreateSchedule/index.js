@@ -49,8 +49,10 @@ const CreateSchedule = () => {
     const [type, setType] = useState('')
     const [hidden, setHidden] = useState('no')
     const [finaly, setFinaly] = useState('no')
+    const [disabled, setDisabled] = useState(false)
 
     const handleSubmit = useCallback( async ( data ) => {
+        setDisabled(true)
         if ( !type ) {
             addToast({
                 type: 'error',
@@ -66,7 +68,7 @@ const CreateSchedule = () => {
 
             const schema = Yup.object().shape({
                 title: Yup.string().required('Título é obrigatório'),
-                schedule: Yup.string().required('Pauta é obrigatório'),
+                description: Yup.string().required('Descrição é obrigatório'),
             })
 
             await schema.validate(data, { abortEarly: false })
@@ -92,6 +94,7 @@ const CreateSchedule = () => {
 
             history.push('/schedules-list')
         } catch ( err ) {
+            setDisabled(false)
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err)
                 if ( formRef.current ) {
@@ -187,7 +190,7 @@ const CreateSchedule = () => {
                                 : ''}
                             </Checkbox>
 
-                        <Button type='submit' >
+                        <Button disabled={disabled} type='submit' >
                             CRIAR
                         </Button>
                     

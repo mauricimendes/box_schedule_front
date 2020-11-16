@@ -34,7 +34,10 @@ const Login = () => {
 
     const [type, setType] = useState('team')
 
+    const [disabled, setDisabled] = useState(false)
+
     const handleSubmit = useCallback( async ( data ) => {
+        setDisabled(true)
         try {
             if ( formRef.current ) {
                 formRef.current.setErrors({})
@@ -72,6 +75,7 @@ const Login = () => {
             })
 
         } catch (err) {
+            setDisabled(false)
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err)
                 if ( formRef.current ) {
@@ -122,7 +126,7 @@ const Login = () => {
                             <span>Admin</span>
                         </Checkbox>
                     
-                        <Button type='submit'>Criar</Button>
+                        <Button disabled={disabled} type='submit'>Criar</Button>
                 
                     </Form>
                 

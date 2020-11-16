@@ -11,12 +11,13 @@ import { useToast } from '../../hooks/toast'
 
 import Header from '../../components/Header'
 
-import { MdDescription } from 'react-icons/md'
+import { MdDescription, MdTitle } from 'react-icons/md'
 
 import { Container, Option, Content, Type, Form, Checkbox} from './styles'
 
 import ButtonLogout from '../../components/ButtonLogout'
 import Textarea from '../../components/Textarea'
+import Input from '../../components/Input'
 import Button from '../../components/Button'
 
 const Options = () => {
@@ -50,6 +51,7 @@ const EditSchedule = () => {
     const [type, setType] = useState('schedule')
     const [hidden, setHidden] = useState(initialData.hidden)
     const [finaly, setFinaly] = useState(initialData.state === 'concluded' ? 'yes' : 'no')
+    const [disabled, setDisabled] = useState(false)
 
     const handleSubmit = useCallback( async ( data ) => {
         if ( !type ) {
@@ -59,23 +61,24 @@ const EditSchedule = () => {
                 description: 'Selecione uma das opções REGRA / ATA para prosseguir.'
             })
         }
-        
+        setDisabled(true)
         try {
             if ( formRef.current ) {
                 formRef.current.setErrors({})
             }
 
             const schema = Yup.object().shape({
-                schedule: Yup.string().required('Titulo obrigatório'),
+                title: Yup.string().required('Titulo obrigatório'),
                 description: Yup.string().required('Descrição obrigatória')
             })
 
             await schema.validate(data, { abortEarly: false })
 
-            const { schedule, description } = data
+            const { schedule, title, description } = data
 
             const dataForm = {
                 id: initialData.id,
+                title,
                 schedule,
                 description,
                 finaly,
@@ -93,6 +96,7 @@ const EditSchedule = () => {
 
             history.push('/schedules-list')
         } catch ( err ) {
+            setDisabled(false)
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err)
                 if ( formRef.current ) {
@@ -118,6 +122,12 @@ const EditSchedule = () => {
         <Container>
             <Content>
                 <Form initialData={initialData} ref={formRef} style={{width: '100%'}} onSubmit={handleSubmit}>
+
+                    <Input 
+                        name='title'
+                        icon={MdTitle}
+                        placeholder='Título'
+                    />
                 
                     <Textarea 
                         name='schedule' 
@@ -173,7 +183,7 @@ const EditSchedule = () => {
                             <span>Finalizar</span>
                             </Checkbox>
 
-                        <Button type='submit' >
+                        <Button disabled={disabled} type='submit' >
                             ALTERAR
                         </Button>
                     

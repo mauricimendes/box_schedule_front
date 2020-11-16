@@ -68,7 +68,6 @@ const ListSchedule = () => {
     const [modal, setModal] = useState(false)
 
     useEffect(() => {
-        console.log(filters)
         api.get('/schedule', {
             params: {
                 active: filters.active ? filters.active : undefined,
@@ -79,7 +78,6 @@ const ListSchedule = () => {
             }
         })
             .then(response => {
-                console.log(response)
                 setSchedules(response.data[0])
                 setTotalUsers(response.data[1].total_users)
             })
@@ -180,7 +178,7 @@ const ListSchedule = () => {
                 schedules.map(schedule => (
                     <ScheduleBlock
                         key={schedule.schedule.id}
-                        numberAvaluations={`${totalUsers}/${schedule.avaluation.length}`}
+                        numberAvaluations={`${schedule.avaluation.length}/${totalUsers}`}
                         avaluation={schedule.avaluation ? schedule.avaluation : []}
                         title={schedule.schedule.title}
                         created_at={schedule.schedule.created_at}

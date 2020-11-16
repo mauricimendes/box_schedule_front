@@ -51,8 +51,10 @@ const CreateSchedule = () => {
     const [user_id, setUser] = useState(user.id)
     const [schedule, setSchedule] = useState(location.state.scheduleAvaluation)
     const [note, setNote] = useState(0)
+    const [disabled, setDisabled] = useState(false)
 
     const handleSubmit = useCallback( async ( data ) => {
+        setDisabled(true)
         try {
             if ( formRef.current ) {
                 formRef.current.setErrors({})
@@ -83,6 +85,7 @@ const CreateSchedule = () => {
 
             history.push('/schedules-list')
         } catch ( err ) {
+            setDisabled(false)
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err)
                 if ( formRef.current ) {
@@ -130,7 +133,7 @@ const CreateSchedule = () => {
                         <ButtonStar onClick={() => setNote(10)} option10 select={note === 10 ? true : false}><RiStarFill /><p>10</p></ButtonStar>
                     </Stars>
                     
-                    <Button type='submit'>AVALIAR</Button>
+                    <Button disabled={disabled} type='submit'>AVALIAR</Button>
                 </Form>
             </Content>
         </Container>

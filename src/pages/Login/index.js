@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi'
 import { Form } from '@unform/web'
@@ -31,7 +31,10 @@ const Login = () => {
     const { signIn } = useAuth()
     const { addToast } = useToast()
 
+    const [disabled, setDisabled] = useState(false)
+
     const handleSubmit = useCallback( async ( data ) => {
+        setDisabled(true)
         try {
             if ( formRef.current ) {
                 formRef.current.setErrors({})
@@ -57,6 +60,7 @@ const Login = () => {
 
             history.push('/schedules')
         } catch ( err ) {
+            setDisabled(false)
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err)
                 if ( formRef.current ) {
@@ -87,7 +91,7 @@ const Login = () => {
                     
                         <Input name='password' icon={FiLock} type='password' placeholder='Senha' />
                     
-                        <Button type='submit'>Entrar</Button>
+                        <Button disabled={disabled} type='submit'>Entrar</Button>
                 
                     </Form>
                 
