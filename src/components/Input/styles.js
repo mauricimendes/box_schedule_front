@@ -13,7 +13,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     & + div {
-        margin-top: 8px;
+        margin-top: ${props => props.notHaveMarginTop ? 'none' : '8px'};
     }
     ${props => props.isErrored && css`
         border-color: #c53030;

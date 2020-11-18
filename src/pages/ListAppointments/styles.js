@@ -146,3 +146,23 @@ export const FilterControl = styled.div`
         font-size: 20px;
     }
 `
+
+export const ButtonCreateAppointment = styled.div`
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ABDBB2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    cursor: pointer;
+    transition: all .3s ease;
+
+    :hover {
+        background-color: #90c298;
+    }
+`;

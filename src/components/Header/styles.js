@@ -11,6 +11,10 @@ export const Container = styled.div`
     align-items: center;
 
     padding: 16px 48px;
+
+    @media only screen and (max-width: 768px) {
+        padding: 8px;
+    }
 `
 
 
@@ -32,6 +36,13 @@ export const Info = styled.div`
         font-weight: 400;
         color: #f3f3f3;
     }
+
+    @media only screen and (max-width: 768px) {
+        h1, span {
+            font-size: 16px;
+        }
+        display: ${props => props.name ? 'none' : 'flex'};
+    }
 `
 
 export const Title = styled.div`
@@ -46,6 +57,12 @@ export const Title = styled.div`
         font-weight: 700;
         color: #f3f3f3;
     }
+
+    @media only screen and (max-width: 768px) {
+        h1 {
+            font-size: 16px;
+        }
+    }
 `
 
 export const Options = styled.div`
@@ -54,4 +71,14 @@ export const Options = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+
+    @media only screen and (max-width: 768px) {
+        button {
+            min-width: 0 !important;
+        }
+
+        p {
+            font-size: 12px !important;
+        }
+    }
 `

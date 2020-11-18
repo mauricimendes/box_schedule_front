@@ -15,7 +15,7 @@ const Header = ({ title, options }) => {
 
     return (
         <Container>
-            <Info>
+            <Info name>
                 <h1>{name}</h1>
             </Info>
             <Title>

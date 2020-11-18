@@ -24,13 +24,23 @@ const Options = () => {
 
     const history = useHistory()
 
+    const handleNavigateToListOrders = useCallback(() => {
+        history.push('/orders-list')
+    }, [history])
+
+    const handleNavigateToListAppointments = useCallback(() => {
+        history.push('/appointments-list')
+    }, [history])
+
     const handleNavigateToAvaluations = useCallback(() => {
         history.push('/schedules-list')
     }, [history])
 
     return (
         <>
-        <Option>
+        <Option haveMoreThanOneButton>
+            <button onClick={handleNavigateToListOrders}><p>ORDENS DE SERVIÇO</p></button>
+            <button onClick={handleNavigateToListAppointments}><p>APONTAMENTOS</p></button>
             <button onClick={handleNavigateToAvaluations}><p>AVALIAÇÕES</p></button>
         </Option>
         <ButtonLogout />

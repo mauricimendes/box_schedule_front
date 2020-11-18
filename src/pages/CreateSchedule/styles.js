@@ -27,7 +27,7 @@ export const Option = styled.div`
         border-radius: 5px;
         padding: 8px;
         min-width: 160px;
-
+        margin-left: 10px;
         p {
             font-size: 16px;
             font-weight: 700;
